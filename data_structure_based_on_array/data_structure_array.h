@@ -2,12 +2,12 @@
 #define TYPE int
 #define STACK_MAX 50
 
-/*Õ»½á¹¹
-*newStack()·µ»ØÒ»¸öÕ»ÀàĞÍÖ¸Õë 
-*pop(s,&out_item)´ÓsÖĞ³öÕ»Ò»¸öÔªËØ 
-*push(s£¬new_item)½«Ò»¸öĞÂÔªËØÈëÕ»
-*clear(s)½«Õ»ÔªËØÇå¿Õ
-*destory(s)Ïú»ÙÒ»¸öÕ»  
+/*æ ˆç»“æ„
+*newStack()è¿”å›ä¸€ä¸ªæ ˆç±»å‹æŒ‡é’ˆ 
+*pop(s,&out_item)ä»sä¸­å‡ºæ ˆä¸€ä¸ªå…ƒç´  
+*push(sï¼Œnew_item)å°†ä¸€ä¸ªæ–°å…ƒç´ å…¥æ ˆ
+*clear(s)å°†æ ˆå…ƒç´ æ¸…ç©º
+*destory(s)é”€æ¯ä¸€ä¸ªæ ˆ  
 */
 
 typedef struct stack{
