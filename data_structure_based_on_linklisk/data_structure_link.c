@@ -1,46 +1,41 @@
 #include "data_structure_link.h"
-#include "stdlib.h"
+#include <stdlib.h>
 
 
 Stack* newStack()
 {
-	Stack* node = (Stack*)malloc(sizeof(Stack));
-	node->end = NULL;
-	return node;
+	Stack* new_stack = (Stack*)malloc(sizeof(Stack));
+	new_stack->end = NULL;
+	return new_stack;
 }
-int pop(Stack*s,TYPE* out_item)
+int pop(Stack*s,TYPES* out_item)
 {
-	Item* out_node = s->end;
-	if(s->end == NULL)
+	NodeS* out_node = s->end;
+	if(out_node == NULL)
 		return -1;
 	s->end = out_node->last;
-	if(s->end!=NULL)
-		s->end->next = NULL;
 	*out_item = out_node->data;
 	free(out_node);
 	return 1;
 }
-int push(Stack* s,TYPE new_item)
+int push(Stack* s,TYPES new_item)
 {
-	Item* new_node = (Item*)malloc(sizeof(Item));
+	NodeS* new_node = (NodeS*)malloc(sizeof(NodeS));
 	new_node-> data = new_item;
 	new_node->last = s->end;
-	new_node->next = NULL;
-	if(s->end!=NULL)
-		s->end->next = new_node;
 	s->end = new_node;
 	return 0;
 }
-void destory(Stack** s)
+void destoryS(Stack** s)
 {
-	clear(*s);
+	clearS(*s);
 	free(*s);
 	*s = NULL;
 }
-void clear(Stack* s)
+void clearS(Stack* s)
 {
-	Item* pointer = s->end;
-	Item* current = pointer;
+	NodeS* pointer = s->end;
+	NodeS* current = pointer;
 	while(pointer!=NULL)
 	{
 		pointer = current->last;
@@ -50,3 +45,52 @@ void clear(Stack* s)
 	s->end = NULL;
 }
 
+Queue* newQueue()
+{
+	Queue* new_queue = (Queue*)malloc(sizeof(Queue));
+	new_queue->head = NULL;
+	new_queue->rear = NULL;
+	return new_queue;
+}
+int enqueue(Queue* q,TYPEQ new_item)
+{
+	NodeQ* new_node = (NodeQ*)malloc(sizeof(NodeQ));
+	new_node->data = new_item;
+	new_node->next = NULL;
+	if(q->head==NULL)
+		q->head = new_node;
+	else
+		q->rear->next = new_node;
+	q->rear = new_node;
+	return 0;
+	
+}
+int dequeue(Queue* q,TYPEQ* out_item)
+{
+	NodeQ* out_node = q->head;
+	if(out_node == NULL)
+		return -1;
+	q->head = out_node->next;
+	*out_item = out_node->data;
+	free(out_node); 
+	return 1;
+}
+void clearQ(Queue* q)
+{
+	NodeQ* pointer = q->head;
+	NodeQ* current = pointer;
+	while(pointer!=NULL)
+	{
+		pointer = current->next;
+		free(current);
+		current = pointer;
+	}
+	q->head = NULL;
+	q->rear = NULL;
+}
+void destoryQ(Queue** q)
+{
+	clearQ(*q);
+	free(*q);
+	*q = NULL;
+}
