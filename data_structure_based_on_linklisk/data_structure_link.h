@@ -54,45 +54,44 @@ void clearQ(Queue* q);
 void destoryQ(Queue** q);
 /*队列结构*/ 
 
-/*通用线性表--更灵活的数组 
-*虽然我已array来命名，但这其实是一个双链表，至于为什么取名叫数组，可能是用惯了php和python那种很灵活的数组的缘故吧，
-*大家也可以自己改一下名字，使用搜索替换就好了 （以下出现的“数组”均只我的这个数据结构） 
+/*通用线性表--List 
+*我真是愚不可及，为啥当初要拿array来命令这个结构，现在又得改一堆东西 
 *节点的数据类型可以自定义，所以建议每一个节点储存一个数组从而减少节点数，提高效率 
-*newArray()创建一个数组 
+*newArray()创建一个List 
 *getItem(a,index)返回索引序号为index的节点（第index+1）个节点 
-*addItem(a,node,new_value)在node节点前插入一个新节点，node为NULL则表示在数组a的末尾插入一个元素
+*addItem(a,node,new_value)在node节点前插入一个新节点，node为NULL则表示在List a的末尾插入一个元素
 *getIndex(a)遍历所有节点，建立一个各节点地址的索引数组，用于快速使用序号访问 某个节点(注意：在执行插入，删除操作时，索引不会自动更新，
 			再次调用该函数可以更新索引)
 *dropItem(a,node)删除node节点
-*getPart(a,begin_node,length)以begin_node 为起点，从数组a中截取长度为lenght各节点构成新的数组并返回，此操作不影原数组
-*connectArray(a,b)把数组b接在数组a的后面， 并返回数组a（原a，b数组不存在了，数组a为连接后的新数组） 
-*clearA(a)清空数组a（留下头节点，相当于新建的空数组） 
-*destoryA(a)销毁数组a 
+*getPart(a,begin_node,length)以begin_node 为起点，从List a中截取长度为lenght各节点构成新的List并返回，此操作不影响原List 
+*connectArray(a,b)把List b接在List a的后面， 并返回List a（原a，b List不存在了，List a为连接后的新List） 
+*clearA(a)清空List a（留下头节点，相当于新建的空List） 
+*destoryA(a)销毁List a(删除整个list，头结点置为NULL)
 */
 //定义基本数据类型 
-#define TYPEA int
+#define TYPEL int
 
-typedef struct array{
+typedef struct list{
 	int node_sum;
-	struct node_a* head;
-	struct node_a* rear;
-	struct node_a** index; 
-	struct node_a* pointer_node;
+	struct node_l* head;
+	struct node_l* rear;
+	struct node_l** index; 
+	struct node_l* pointer_node;
 	int pointer_num;
-}Array; 
-typedef struct node_a{
-	TYPEA data;
-	struct node_a* next;
-	struct node_a* last;
-}NodeA;
+}List; 
+typedef struct node_l{
+	TYPEL data;
+	struct node_l* next;
+	struct node_l* last;
+}NodeL;
 
-Array* newArray();
-NodeA* getItem(Array* a,int index);
-NodeA* addItem(Array* a,NodeA* node,TYPEA new_value);
-void dropItem(Array* a,NodeA* node);
-NodeA** getIndex(Array* a);
-Array* getPart(Array* a,NodeA* begin_node,int len);
-Array* connectArray(Array* a,Array* b);
-void clearA(Array* a);
-void destoryA(Array** a);
+List* newList();
+NodeL* getItem(List* a,int index);
+NodeL* addItem(List* a,NodeL* node,TYPEL new_value);
+void dropItem(List* a,NodeL* node);
+NodeL** getIndex(List* a);
+List* getPart(List* a,NodeL* begin_node,int len);
+List* connectList(List* a,List* b);
+void clearL(List* a);
+void destoryL(List** a);
 

@@ -15,10 +15,10 @@ int main()
 	#endif
 	
 	#ifdef TEST_ARRAY
-	Array* a = newArray();
-	Array* b;
-	NodeA* p;
-	NodeA** index;
+	List* l = newList();
+	List* b;
+	NodeL* p;
+	NodeL** index;
 	#endif
 	
 	#ifdef TEST_QUEUE
@@ -33,7 +33,7 @@ int main()
 		#endif
 		
 		#ifdef TEST_ARRAY
-		addItem(a,NULL,i);
+		addItem(l,NULL,i);
 		#endif
 		
 		#ifdef TEST_QUEUE
@@ -47,7 +47,7 @@ int main()
 		#endif
 		
 		#ifdef TEST_ARRAY
-		p = getItem(a,i);
+		p = getItem(l,i);
 		item[i] = p->data;
 		#endif
 		
@@ -58,26 +58,26 @@ int main()
 	
 	#ifdef TEST_ARRAY
 	puts("索引测试"); 
-	index = getIndex(a);
+	index = getIndex(l);
 	for(i=0;i<100;i++)
 	{
 		printf("%p\n",index[i]);
 	}
 	puts("利用原表生成指定长度新表测试");
-	b = getPart(a,getItem(a,15),50);
+	b = getPart(l,getItem(l,15),50);
 	for(i=0;i<50;i++)
 	{
 		printf("%d ",getItem(b,i)->data);
 	}
 	printf("\n");
 	puts("两表连接测试");
-	connectArray(a,b);
+	connectList(l,b);
 	for(i=0;i<150;i++)
 	{
-		printf("%d ",getItem(a,i)->data);
+		printf("%d ",getItem(l,i)->data);
 	}
-	clearA(a);
-	destoryA(&a);
+	clearL(l);
+	destoryL(&l);
 	#endif
 	
 	#ifdef TEST_STACK

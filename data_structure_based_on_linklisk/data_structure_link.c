@@ -96,9 +96,9 @@ void destoryQ(Queue** q)
 }
 
 
-Array* newArray()
+List* newList()
 {
-	Array* new_array = (Array*)malloc(sizeof(Array));
+	List* new_array = (List*)malloc(sizeof(List));
 	new_array->head = NULL;
 	new_array->rear = NULL;
 	new_array->index = NULL;
@@ -107,16 +107,16 @@ Array* newArray()
 	new_array->pointer_node = NULL;
 	return new_array;
 }
-NodeA* getItem(Array* a,int index)
+NodeL* getItem(List* l,int index)
 {
-	NodeA* pointer = (a->pointer_node==NULL)? a->head:a->pointer_node;
-	int i = a->pointer_num;
+	NodeL* pointer = (l->pointer_node==NULL)? l->head:l->pointer_node;
+	int i = l->pointer_num;
 	if(pointer == NULL)
 		return NULL;
-	if(index>=(a->node_sum-1))
-		return a->rear;
+	if(index>=(l->node_sum-1))
+		return l->rear;
 	if(index<=0)
-		return a->head;
+		return l->head;
 	if(index>=i)
 	{
 		while(i!=index)
@@ -133,68 +133,68 @@ NodeA* getItem(Array* a,int index)
 			pointer = pointer->last;
 		}
 	}
-	a->pointer_node = pointer;
-	a->pointer_num = i;
+	l->pointer_node = pointer;
+	l->pointer_num = i;
 	return pointer;
 }
 
-NodeA* addItem(Array* a,NodeA* node,TYPEA new_value)
+NodeL* addItem(List* l,NodeL* node,TYPEL new_value)
 {
-	NodeA* new_node = (NodeA*)malloc(sizeof(NodeA));
+	NodeL* new_node = (NodeL*)malloc(sizeof(NodeL));
 	new_node->data = new_value;
 	new_node->next = node;
 	if(node==NULL)
 	{
-		new_node->last = a->rear;
-		if(a->rear!=NULL)
-			a->rear->next = new_node;
-		a->rear = new_node;
+		new_node->last = l->rear;
+		if(l->rear!=NULL)
+			l->rear->next = new_node;
+		l->rear = new_node;
 	}
 	else
 	{
 		new_node->last = node->last;
 		node->last = new_node;
 	}
-	if(node == a->head)
-		a->head = new_node;
+	if(node == l->head)
+		l->head = new_node;
 
-	a->node_sum++;
+	l->node_sum++;
 	return new_node;
 }
-void dropItem(Array* a,NodeA* node)
+void dropItem(List* l,NodeL* node)
 {
 	node->last->next = node->next;
 	node->next->last = node->last;
 	free(node);
-	a->node_sum--;
+	l->node_sum--;
 }
 
-NodeA** getIndex(Array* a)
+NodeL** getIndex(List* l)
 {
-	NodeA** index = (NodeA**)malloc(a->node_sum*sizeof(NodeA*));
-	NodeA* p = a->head;
+	NodeL** index = (NodeL**)malloc(l->node_sum*sizeof(NodeL*));
+	NodeL* p = l->head;
 	int i;
 	for(i=0;p!=NULL;i++)
 	{
 		*(index+i) = p;
 		p = p->next;
 	}
-	if(a->index!=NULL)
-		free(a->index);
-	a->index = index;
+	if(l->index!=NULL)
+		free(l->index);
+	l->index = index;
 	return index;
 }
 
-Array* getPart(Array* a,NodeA* begin_node,int len)
+List* getPart(List* l,NodeL* begin_node,int len)
 {
-	Array* new_array;
-	NodeA* p = begin_node; 
+	List* new_array;
+	NodeL* p = begin_node; 
 	int i = 0;
 	if(p == NULL)
 		return NULL;
 	else if(len<=0)
 		return NULL;
-	new_array = newArray();
+	new_array = newList();
 	while(p!=NULL)
 	{
 		addItem(new_array,NULL,p->data);
@@ -205,39 +205,39 @@ Array* getPart(Array* a,NodeA* begin_node,int len)
 	}
 	return new_array;
 }
-Array* connectArray(Array* a,Array* b)
+List* connectList(List* l,List* b)
 {
-	a->rear->next = b->head;
-	b->head->last = a->rear;
-	a->node_sum = a->node_sum+b->node_sum;
+	l->rear->next = b->head;
+	b->head->last = l->rear;
+	l->node_sum = l->node_sum+b->node_sum;
 	free(b);
-	return a;
+	return l;
 }
 
-void clearA(Array* a)
+void clearL(List* l)
 {
-	NodeA* pointer = a->head;
-	NodeA* current = pointer;
+	NodeL* pointer = l->head;
+	NodeL* current = pointer;
 	while(pointer!=NULL)
 	{
 		pointer = current->next;
 		free(current);
 		current = pointer;
 	}
-	a->head = NULL;
-	a->rear = NULL;
-	if(a->index!=NULL)
+	l->head = NULL;
+	l->rear = NULL;
+	if(l->index!=NULL)
 	{
-		free(a->index);
-		a->index = NULL;
+		free(l->index);
+		l->index = NULL;
 	}
-	a->node_sum = 0;
-	a->pointer_num = 0;
-	a->pointer_node = NULL;
+	l->node_sum = 0;
+	l->pointer_num = 0;
+	l->pointer_node = NULL;
 }
-void destoryA(Array** a)
+void destoryL(List** l)
 {
-	clearA(*a);
-	free(*a);
-	*a = NULL;
+	clearL(*l);
+	free(*l);
+	*l = NULL;
 }
